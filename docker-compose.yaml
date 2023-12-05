@@ -1,0 +1,33 @@
+version: '3.6'
+
+services:
+  
+  webui:
+    image: ghcr.io/ollama-webui/ollama-webui:main
+    ports:
+      - 8080:8080
+    environment:
+      - OLLAMA_API_BASE_URL=http://ollama:11434/api
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+
+  chatgpt:
+    image: ghcr.io/ivanfioravanti/chatbot-ollama:main
+    ports:
+      - 3000:3000
+    environment:
+      - DEFAULT_MODEL=llama2:latest
+      - OLLAMA_HOST=http://ollama:11434
+      - NEXT_PUBLIC_DEFAULT_TEMPERATURE=0.5
+  
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - 11435:11434
+    environment:
+      - OLLAMA_MODELS=/ollama/models
+      - OLLAMA_ORIGINS=https://webml-demo.vercel.app
+    volumes:
+      - ./.ollama/models:/ollama/models
+      - ./models:/custom/models
