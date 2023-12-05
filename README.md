@@ -18,6 +18,8 @@ docker-compose exec ollama ollama pull llama2
 docker-compose exec ollama ollama pull codellama:7b
 ```
 
+You can also check [ollama model library](https://ollama.ai/library) to find appropiate model to test.
+
 ## Create custom models manually
 
 You can create custom models based on previous ones, using some Modelfile's:
